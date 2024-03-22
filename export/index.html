@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Testing</title>
+
+    <meta name="description" content="Testing" />
+    <meta name="author" content="Yubin Hsu" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="libs/reveal.js/4.3.1/reset.css" />
+    <link rel="stylesheet" href="libs/reveal.js/4.3.1/reveal.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+    />
+
+    <!-- highlight Theme -->
+
+    <link
+      rel="stylesheet"
+      href="libs/highlight.js/11.3.1/styles/monokai.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="libs/reveal.js/4.3.1/plugin/chalkboard/style.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="libs/reveal.js/4.3.1/plugin/customcontrols/style.css"
+    />
+
+    <!-- Revealjs Theme -->
+
+    <link
+      rel="stylesheet"
+      href="libs/reveal.js/4.3.1/theme/night.css"
+      id="theme"
+    />
+
+    <link rel="stylesheet" href="libs/styles/tasklist.css" />
+    <link rel="stylesheet" href="libs/styles/iota.css" />
+    <link rel="stylesheet" href="libs/styles/layout.css" />
+
+    <!-- Revealjs Theme -->
+
+    <!-- css list -->
+  </head>
+
+  <body>
+    <div class="reveal">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>Testing</h1>
+          <style>
+            :root {
+              --r-heading1-size: 72px;
+              --r-heading2-size: 48px;
+            }
+            pre {
+              background: #303030;
+              padding: 10px 16px;
+              border-radius: 0.3em;
+              counter-reset: line;
+            }
+            pre code[class*="="] .line {
+              display: block;
+              line-height: 1.8rem;
+              font-size: 1em;
+            }
+            pre code[class*="="] .line:before {
+              counter-increment: line;
+              content: counter(line);
+              display: inline-block;
+              border-right: 3px solid #6ce26c;
+              padding: 0 0.5em;
+              margin-right: 0.5em;
+              color: #afafaf;
+              width: 24px;
+              text-align: right;
+            }
+
+            .reveal .slides > section > section {
+              text-align: left;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4 {
+              text-align: center;
+            }
+
+            p {
+              text-align: center;
+            }
+
+            .present img {
+              max-height: 65vh;
+            }
+          </style>
+          <script>
+            window.onload = () => setTimeout(setLineNumber, 10);
+
+            const setLineNumber = () => {
+              const codeBlocks = document.querySelectorAll(
+                'pre code[class*="="]'
+              );
+              codeBlocks.forEach((code) => {
+                const addLineSpan = code.innerHTML
+                  .trim()
+                  .replaceAll("\n", '</span><span class="line">');
+                code.innerHTML = `<span class="line">${addLineSpan}</span>`;
+              });
+            };
+          </script>
+        </section>
+
+        <section>
+          <h1>Yubin, Hsu</h1>
+        </section>
+
+        <section>
+          <section>
+            <h1>Why test</h1>
+          </section>
+
+          <section>
+            <p>Check</p>
+            <p>Quality</p>
+            <p>Confidence</p>
+          </section>
+
+          <section>
+            <p><img src="img/2022-04-01-08-24-14.png" alt="" /></p>
+          </section>
+
+          <section>
+            <h1>Why we write test</h1>
+          </section>
+
+          <section>
+            <h2>Automation</h2>
+          </section>
+
+          <section>
+            <h2>Documentation</h2>
+            <p>how our code should work</p>
+          </section>
+
+          <section>
+            <p><img src="img/2022-04-01-08-22-54.png" alt="" /></p>
+          </section>
+
+          <section>
+            <p>How</p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Golden Rule</h1>
+          </section>
+
+          <section>
+            <p>design a test case to be</p>
+            <div style="padding: 0 100px">
+              <ul>
+                <li>simple</li>
+                <li>short</li>
+                <li>abstraction-free</li>
+                <li>flat</li>
+                <li>delightful to work with</li>
+              </ul>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>The test</h1>
+          </section>
+
+          <section>
+            <h2>test name</h2>
+            <ol>
+              <li>What is being tested?</li>
+              <li>What scenario?</li>
+              <li>What is the expected result?</li>
+            </ol>
+          </section>
+
+          <section>
+            <pre><code class="language-typescript=">// 1. unit under test
+describe('Products Service', function() {
+  describe('Add new product', function() {
+    // 2. scenario and 3. expectation
+    it('When no price is specified, then the product status is pending approval', ()=&gt; {
+      const newProduct = new ProductService().add(...);
+      expect(newProduct.status).to.equal('pendingApproval');
+    });
+  });
+});
+</code></pre>
+          </section>
+
+          <section>
+            <h2>AAA pattern</h2>
+          </section>
+
+          <section>
+            <p>Arrange</p>
+            <p>Act</p>
+            <p>Assert</p>
+          </section>
+
+          <section>
+            <pre><code class="language-typescript=">describe(&quot;Customer classifier&quot;, () =&gt; {
+  test(&quot;When customer spent more than 500$, should be classified as premium&quot;, () =&gt; {
+    //Arrange
+    const customerToClassify = { spent: 505, joined: new Date(), id: 1 };
+    const DBStub = sinon.stub(dataAccess, &quot;getCustomer&quot;).reply({ id: 1, classification: &quot;regular&quot; });
+
+    //Act
+    const receivedClassification = customerClassifier.classifyCustomer(customerToClassify);
+
+    //Assert
+    expect(receivedClassification).toMatch(&quot;premium&quot;);
+  });
+});
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Use product language</h2>
+          </section>
+
+          <section>
+            <p>code the expectation in a human-like language</p>
+            <pre><code class="language-typescript=">expect(myValue &gt; 5).toBe(true)
+expect(myValue).toBeGreaterThan(5) // better to read
+</code></pre>
+            <p>
+              <a href="https://jestjs.io/docs/expect#expectextendmatchers"
+                >https://jestjs.io/docs/expect#expectextendmatchers</a
+              >
+            </p>
+          </section>
+
+          <section>
+            <h2>Test public methods</h2>
+          </section>
+
+          <section>
+            <h2>Don’t “foo”, use real input data</h2>
+          </section>
+
+          <section>
+            <h2>Make each test case independent</h2>
+            <p><s>global test fixture</s></p>
+          </section>
+
+          <section>
+            <h2>No catch, expect them</h2>
+            <pre><code class="language-typescript=">it('should return 200 status code when call /api/todos API', async() =&gt; {
+    try {
+        const response = await axios.get('/api/todos')
+        expect(response.status).toBe(200)
+    } catch(error) {
+        fail(`${error}`)
+    }
+})
+</code></pre>
+            <p>↓</p>
+            <pre><code class="language-typescript=">it(' should return 200 status code when call /api/todos API', async() =&gt; {
+    const response = await axios.get('/api/todos')
+    expect(response.status).toBe(200)
+})
+</code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Types of tests</h1>
+            <ul>
+              <li>End-to-End, simulate user behavior</li>
+              <li>Integration, multiple units work together</li>
+              <li>Unit, single function/component</li>
+              <li>Static, code typo or error</li>
+            </ul>
+          </section>
+
+          <section>
+            <p><img src="img/2022-04-01-08-24-53.png" alt="" /></p>
+          </section>
+        </section>
+
+        <section>
+          <h1>TestPyramid</h1>
+          <p><img src="img/2022-03-31-23-47-28.png" alt="" /></p>
+          <p>
+            <a href="https://martinfowler.com/bliki/TestPyramid.html"
+              >https://martinfowler.com/bliki/TestPyramid.html</a
+            >
+          </p>
+        </section>
+
+        <section>
+          <h1>Choose a Test Framework</h1>
+        </section>
+
+        <section>
+          <section>
+            <h1>Vitest</h1>
+            <p>Blazing Fast Unit Test Framework</p>
+            <p><a href="https://vitest.dev/">https://vitest.dev/</a></p>
+            <p>
+              <a href="https://github.com/vitest-dev/vitest"
+                >https://github.com/vitest-dev/vitest</a
+              >
+            </p>
+          </section>
+
+          <section>
+            <h2>Vitest Install</h2>
+            <pre><code>npm install -D vitest
+npm install -D @vitest/coverage-c8
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Vitest Config</h2>
+            <p>create <code>vitest.config.ts</code></p>
+            <pre><code>import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+    test: {}
+})
+</code></pre>
+            <p>
+              <a href="https://vitest.dev/config/"
+                >https://vitest.dev/config/</a
+              >
+            </p>
+          </section>
+
+          <section>
+            <h2>npm script</h2>
+            <pre><code>&quot;test&quot;: &quot;vitest run --coverage&quot;
+</code></pre>
+          </section>
+
+          <section>
+            <h2>A Test</h2>
+            <pre><code class="language-typescript=">import { describe, test, expect } from 'vitest'
+
+const expected = true
+const actual = false
+
+describe('my test suite01', () =&gt; {
+    test('it works', () =&gt; {
+        expect(actual).toBe(expected)
+    })
+})
+
+</code></pre>
+          </section>
+
+          <section>
+            <p><img src="img/2022-04-01-00-47-50.png" alt="" /></p>
+          </section>
+
+          <section>
+            <pre><code class="language-typescript">describe(&quot;API test&quot;, () =&gt; {
+  it(&quot;should successfully get a pong string&quot;, () =&gt; {
+    // Some testing condition
+  });
+  it(&quot;test B&quot;, () =&gt; {});
+  it(&quot;test C&quot;, () =&gt; {});
+  it(&quot;test D&quot;, () =&gt; {});
+});
+</code></pre>
+            <p><img src="img/2022-04-01-00-50-41.png" alt="" /></p>
+          </section>
+
+          <section>
+            <h2>Expect</h2>
+            <p>
+              <a href="https://vitest.dev/api/expect.html"
+                >https://vitest.dev/api/expect.html</a
+              >
+            </p>
+            <pre><code class="language-typescript">expect(1 + 2).toBeLessThan(4);
+expect(1 + 2).toBeLessThanOrEqual(3);
+expect([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]).toContain(&quot;B&quot;);
+expect(1 + 2).not.toBe(4);
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Synchronous</h2>
+            <pre><code class="language-typescript">describe(&quot;Math test&quot;, () =&gt; {
+  it(&quot;1 + 2 should be 3&quot;, () =&gt; {
+    const a = 1;
+    const b = 2;
+    expect(a + b).toBe(3);
+  });
+});
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Asynchronous</h2>
+            <pre><code class="language-typescript">// pong.ts
+async getPong(): Promise&lt;string&gt; {
+    return new Promise((resolve) =&gt; {
+        resolve('pong')
+    })
+}
+
+// pong.spec.ts
+describe('asynchronous test', () =&gt; {
+    it('get pong', async () =&gt; {
+        const result = await pong.getPong()
+        expect(result).toBe('pong')
+    })
+    it('still get pong', async () =&gt; {
+        await expect(pong.getPong()).resolves.toBe('pong')
+    })
+})
+</code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Report</h1>
+          </section>
+
+          <section>
+            <h2>Test Report</h2>
+            <p><img src="img/test-report.jpg" alt="" /></p>
+          </section>
+
+          <section>
+            <h1>Coverage Report</h1>
+            <p><img src="img/coverage-report.jpg" alt="" /></p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Property Based Testing</h1>
+            <p>Properties, Not Examples</p>
+          </section>
+
+          <section>
+            <h1>Fast Check</h1>
+            <p><img src="img/2023-09-21-22-50-04.png" alt="" /></p>
+            <p><a href="https://fast-check.dev/">https://fast-check.dev/</a></p>
+          </section>
+
+          <section>
+            <pre><code class="language-typescript=">import fc from 'fast-check'
+
+describe('Product service', () =&gt; {
+  describe('Adding new', () =&gt; {
+    //this will run 100 times with different random properties
+    it('Add new product with random yet valid properties, always successful', () =&gt;
+      fc.assert(
+        fc.property(fc.integer(), fc.string(), (id, name) =&gt; {
+          expect(addNewProduct(id, name).status).toEqual('approved')
+        })
+      ))
+  })
+})
+</code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Snapshot Testing</h1>
+          </section>
+
+          <section>
+            <p>
+              Make sure the output of your functions does not change
+              unexpectedly.
+            </p>
+          </section>
+
+          <section>
+            <pre><code class="language-typescript=">import { render } from '@testing-library/react'
+import YourComponent from 'YourComponent'
+
+it('The component UI should not change', () =&gt; {
+
+  const comp = render(&lt;YourComponent /&gt;)
+
+  expect(comp).toMatchSnapshot()
+
+})
+</code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Contract testing</h1>
+          </section>
+
+          <section>
+            <p>
+              Contract testing is a methodology for ensuring that two separate
+              systems (such as two microservices) are compatible and can
+              communicate with one other.
+            </p>
+          </section>
+
+          <section>
+            <p>
+              <img
+                src="https://docs.pact.io/img/how-pact-works/summary.png"
+                alt=""
+              />
+            </p>
+            <p><a href="https://docs.pact.io/">https://docs.pact.io/</a></p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Mutation Testing</h1>
+          </section>
+
+          <section>
+            <p>
+              Mutation testing introduces changes to your code, then runs your
+              unit tests against the changed code.
+            </p>
+          </section>
+
+          <section>
+            <h2>Stryker</h2>
+            <p>
+              <img
+                src="https://stryker-mutator.io/images/stryker-man.svg"
+                alt=""
+              />
+            </p>
+            <p>
+              <a href="https://stryker-mutator.io/"
+                >https://stryker-mutator.io/</a
+              >
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Testing Library</h1>
+          </section>
+
+          <section>
+            <h2>@testing-library/react</h2>
+            <p>
+              <a href="https://github.com/testing-library/react-testing-library"
+                >https://github.com/testing-library/react-testing-library</a
+              >
+            </p>
+            <p>
+              🐐 Simple and complete React DOM testing utilities that encourage
+              good testing practices.
+            </p>
+          </section>
+
+          <section>
+            <h2>@testing-library/user-event</h2>
+            <p>
+              <a href="https://github.com/testing-library/user-event"
+                >https://github.com/testing-library/user-event</a
+              >
+            </p>
+            <p>🐕 Simulate user events</p>
+          </section>
+
+          <section>
+            <pre><code>import {render, screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import Fetch from './fetch'
+
+test('loads and displays greeting', async () =&gt; {
+  // arrange
+  render(&lt;Fetch url=&quot;/greeting&quot; /&gt;)
+
+  // act
+  await userEvent.click(screen.getByText('Load Greeting'))
+  await screen.findByRole('heading')
+
+  // assert
+  expect(screen.getByRole('heading')).toHaveTextContent('hello there')
+  expect(screen.getByRole('button')).toBeDisabled()
+})
+</code></pre>
+            <p>
+              <a
+                href="https://testing-library.com/docs/react-testing-library/example-intro/#full-example"
+                >https://testing-library.com/docs/react-testing-library/example-intro/#full-example</a
+              >
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Cypress</h1>
+          </section>
+
+          <section>
+            <p>Cypress</p>
+            <p>
+              <a href="https://github.com/cypress-io/cypress"
+                >https://github.com/cypress-io/cypress</a
+              >
+            </p>
+            <p>
+              Fast, easy and reliable testing for anything that runs in a
+              browser.
+            </p>
+          </section>
+
+          <section>
+            <p>
+              <a
+                href="https://docs.cypress.io/guides/end-to-end-testing/writing-your-first-end-to-end-test"
+                >Writing Your First E2E Test
+              </a>
+            </p>
+            <pre><code class="language-javascript">describe(&quot;My First Test&quot;, () =&gt; {
+  it(&quot;Gets, types and asserts&quot;, () =&gt; {
+    cy.visit(&quot;https://example.cypress.io&quot;);
+
+    cy.contains(&quot;type&quot;).click();
+
+    // Should be on a new URL which
+    // includes '/commands/actions'
+    cy.url().should(&quot;include&quot;, &quot;/commands/actions&quot;);
+
+    // Get an input, type into it and verify
+    // that the value has been updated
+    cy.get(&quot;.action-email&quot;)
+      .type(&quot;fake@email.com&quot;)
+      .should(&quot;have.value&quot;, &quot;fake@email.com&quot;);
+  });
+});
+</code></pre>
+          </section>
+        </section>
+
+        <section>
+          <p><img src="img/mock-test-pattern.jpg" alt="" /></p>
+        </section>
+
+        <section>
+          <h2>Reference</h2>
+          <p>
+            <a
+              href="https://github.com/yubinTW/javascript-testing-best-practices/blob/master/readme-zh-TW.md"
+              >javascript-testing-best-practices</a
+            >
+          </p>
+        </section>
+
+        <section>
+          <p>Thx.</p>
+        </section>
+      </div>
+    </div>
+
+    <div class="line top"></div>
+    <div class="line bottom"></div>
+    <div class="line left"></div>
+    <div class="line right"></div>
+
+    <script src="libs/reveal.js/4.3.1/reveal.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/markdown/markdown.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/highlight/highlight.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/math/math.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/fullscreen/plugin.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/animate/plugin.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/animate/svg.min.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/anything/plugin.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/anything/Chart.min.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/anything/d3/d3.v3.min.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/anything/d3.patch.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/anything/d3/queue.v1.min.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/anything/d3/topojson.v1.min.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/anything/function-plot.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/customcontrols/plugin.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/embed-tweet/plugin.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/chart/chart.min.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/chart/plugin.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/verticator/verticator.js"></script>
+
+    <script src="libs/reveal.js/4.3.1/plugin/zoom/zoom.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/search/search.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/menu/menu.js"></script>
+    <script src="libs/reveal.js/4.3.1/plugin/chalkboard/plugin.js"></script>
+
+    <!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/plugin.js"></script>  -->
+    <!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/recorder.js"></script>-->
+    <!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/RecordRTC.js"></script>-->
+
+    <script>
+      const printPlugins = [
+        RevealNotes,
+        RevealHighlight,
+        RevealMath.MathJax3,
+        RevealAnimate,
+        RevealChalkboard,
+        RevealEmbedTweet,
+        RevealChart,
+      ];
+
+      const plugins = [
+        ...printPlugins,
+        RevealZoom,
+        RevealSearch,
+        RevealMarkdown,
+        RevealMenu,
+        RevealFullscreen,
+        RevealAnything,
+        //RevealAudioSlideshow,
+        //RevealAudioRecorder,
+        RevealCustomControls,
+        // poll
+        // question
+        // seminar
+        Verticator,
+      ];
+
+      // Also available as an ES module, see:
+      // https://revealjs.com/initialization/
+      Reveal.initialize({
+        controls: true,
+        controlsTutorial: true,
+        controlsLayout: "bottom-right",
+        controlsBackArrows: "faded",
+        progress: true,
+        slideNumber: true,
+        //#showSlideNumber "all" "print" "speaker"
+        hash: true, //# hash: false,
+        //# respondToHashChanges: true,
+        //# history: false,
+        keyboard: true,
+        //#keyboardCondition: null,
+        overview: true,
+        center: true,
+        touch: true,
+        loop: false,
+        rtl: false,
+        //#navigationMode: 'default', linear grid
+        shuffle: false,
+        fragments: true,
+        fragmentInURL: false,
+        embedded: false,
+        help: true,
+        //#pause: true
+        showNotes: false,
+        autoPlayMedia: false, // TODO fix this to a nullable value
+        //#preloadIframes: null. true false
+        //#autoAnimate: true
+        //#autoAnimateMatcher: null,
+        //#autoAnimateEasing: 'ease',
+        //autoAnimateDuration: 1.0,
+        //#autoAnimateUnmatched: true
+        //#autoAnimateStyles: []
+        autoSlide: 0, // TODO fix this to a falseable value
+        autoSlideStoppable: true,
+        autoSlideMethod: "0",
+        defaultTiming: 120,
+        mouseWheel: false,
+        //#previewLinks: false
+        //#postMessage: true, // TODO : this can cause issues with the vscode api ???
+        //#postMessageEvents: false,
+        //#focusBodyOnPageVisibilityChange: true,
+        transition: "slide",
+        transitionSpeed: "default",
+        backgroundTransition: "fade",
+        //#pdfMaxPagesPerSlide: Number.POSITIVE_INFINITY,
+        //#pdfSeparateFragments: true,
+        //#pdfPageHeightOffset: -1,
+        viewDistance: 3,
+        //#mobileViewDistance: 2,
+        display: "block",
+        //#hideInactiveCursor: true,
+        //#hideCursorTime: 5000
+
+        // Parallax Background
+        parallaxBackgroundImage: "",
+        parallaxBackgroundSize: "",
+        parallaxBackgroundHorizontal: 0,
+        parallaxBackgroundVertical: 0,
+
+        //Presentation Size
+        width: 960,
+        height: 700,
+        margin: 0.04,
+        minScale: 0.2,
+        maxScale: 2,
+        disableLayout: false,
+
+        audio: {
+          prefix: "audio/", // audio files are stored in the "audio" folder
+          suffix: ".ogg", // audio files have the ".ogg" ending
+          textToSpeechURL: null, // the URL to the text to speech converter
+          defaultNotes: false, // use slide notes as default for the text to speech converter
+          defaultText: false, // use slide text as default for the text to speech converter
+          advance: 0, // advance to next slide after given time in milliseconds after audio has played, use negative value to not advance
+          autoplay: false, // automatically start slideshow
+          defaultDuration: 5, // default duration in seconds if no audio is available
+          defaultAudios: true, // try to play audios with names such as audio/1.2.ogg
+          playerOpacity: 0.05, // opacity value of audio player if unfocused
+          playerStyle:
+            "position: fixed; bottom: 4px; left: 25%; width: 50%; height:75px; z-index: 33;", // style used for container of audio controls
+          startAtFragment: false, // when moving to a slide, start at the current fragment or at the start of the slide
+        },
+
+        chalkboard: {
+          // font-awesome.min.css must be available
+          //src: "chalkboard/chalkboard.json",
+          storage: "chalkboard-demo",
+        },
+
+        customcontrols: {
+          controls: [
+            {
+              id: "toggle-overview",
+              title: "Toggle overview (O)",
+              icon: '<i class="fa fa-th"></i>',
+              action: "Reveal.toggleOverview();",
+            },
+            {
+              icon: '<i class="fa fa-pen-square"></i>',
+              title: "Toggle chalkboard (B)",
+              action: "RevealChalkboard.toggleChalkboard();",
+            },
+            {
+              icon: '<i class="fa fa-pen"></i>',
+              title: "Toggle notes canvas (C)",
+              action: "RevealChalkboard.toggleNotesCanvas();",
+            },
+          ],
+        },
+        chart: {
+          defaults: {
+            color: "lightgray", // color of labels
+            scale: {
+              beginAtZero: true,
+              ticks: { stepSize: 1 },
+              grid: { color: "lightgray" }, // color of grid lines
+            },
+          },
+          line: {
+            borderColor: [
+              "rgba(20,220,220,.8)",
+              "rgba(220,120,120,.8)",
+              "rgba(20,120,220,.8)",
+            ],
+            borderDash: [
+              [5, 10],
+              [0, 0],
+            ],
+          },
+          bar: {
+            backgroundColor: [
+              "rgba(20,220,220,.8)",
+              "rgba(220,120,120,.8)",
+              "rgba(20,120,220,.8)",
+            ],
+          },
+          pie: {
+            backgroundColor: [
+              [
+                "rgba(0,0,0,.8)",
+                "rgba(220,20,20,.8)",
+                "rgba(20,220,20,.8)",
+                "rgba(220,220,20,.8)",
+                "rgba(20,20,220,.8)",
+              ],
+            ],
+          },
+          radar: {
+            borderColor: [
+              "rgba(20,220,220,.8)",
+              "rgba(220,120,120,.8)",
+              "rgba(20,120,220,.8)",
+            ],
+          },
+        },
+        math: {
+          mathjax:
+            "https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js",
+          config: "TeX-AMS_HTML-full",
+          // pass other options into `MathJax.Hub.Config()`
+          TeX: { Macros: { RR: "{\\bf R}" } },
+        },
+        anything: [
+          {
+            className: "plot",
+            defaults: { width: 500, height: 500, grid: true },
+            initialize: function (container, options) {
+              options.target = "#" + container.id;
+              functionPlot(options);
+            },
+          },
+          {
+            className: "chart",
+            initialize: function (container, options) {
+              container.chart = new Chart(container.getContext("2d"), options);
+            },
+          },
+          {
+            className: "anything",
+            initialize: function (container, options) {
+              if (options && options.initialize) {
+                options.initialize(container);
+              }
+            },
+          },
+        ],
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: window.location.search.match(/print-pdf/gi)
+          ? printPlugins
+          : plugins,
+      });
+
+      // Change chalkboard theme :
+      function changeTheme(input) {
+        var config = {};
+        config.theme = input.value;
+        Reveal.getPlugin("RevealChalkboard").configure(config);
+        input.blur();
+      }
+
+      // // Handle the message inside the webview
+      // window.addEventListener('message', event => {
+
+      //     const message = event.data; // The JSON data our extension sent
+
+      //     switch (message.command) {
+      //         case 'refactor':
+      //             Reveal.toggleHelp();
+      //     }
+      // });
+
+      if (window.location.search.match(/print-pdf-now/gi)) {
+        setTimeout(() => {
+          window.print();
+        }, 2500);
+      }
+    </script>
+  </body>
+</html>
